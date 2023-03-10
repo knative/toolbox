@@ -26,7 +26,7 @@ import (
 
 	shell "github.com/kballard/go-shellquote"
 
-	"knative.dev/test-infra/pkg/helpers"
+	"knative.dev/toolbox/pkg/helpers"
 )
 
 const (

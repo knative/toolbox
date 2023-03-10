@@ -5,7 +5,7 @@ import (
 
 	"github.com/pkg/errors"
 	"k8s.io/apimachinery/pkg/util/sets"
-	"knative.dev/test-infra/pkg/gowork"
+	"knative.dev/toolbox/pkg/gowork"
 )
 
 var (

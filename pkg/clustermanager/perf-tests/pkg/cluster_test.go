@@ -24,8 +24,8 @@ import (
 	"github.com/google/go-cmp/cmp"
 	container "google.golang.org/api/container/v1beta1"
 
-	"knative.dev/test-infra/pkg/gke"
-	gkeFake "knative.dev/test-infra/pkg/gke/fake"
+	"knative.dev/toolbox/pkg/gke"
+	gkeFake "knative.dev/toolbox/pkg/gke/fake"
 )
 
 const (

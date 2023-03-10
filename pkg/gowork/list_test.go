@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"knative.dev/test-infra/pkg/gowork"
-	"knative.dev/test-infra/pkg/gowork/testdata"
+	"knative.dev/toolbox/pkg/gowork"
+	"knative.dev/toolbox/pkg/gowork/testdata"
 )
 
 func TestList(t *testing.T) {

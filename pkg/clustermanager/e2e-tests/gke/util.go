@@ -21,8 +21,8 @@ import (
 	"log"
 	"strings"
 
-	"knative.dev/test-infra/pkg/clustermanager/e2e-tests/common"
-	"knative.dev/test-infra/pkg/cmd"
+	"knative.dev/toolbox/pkg/clustermanager/e2e-tests/common"
+	"knative.dev/toolbox/pkg/cmd"
 )
 
 const (

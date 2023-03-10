@@ -5,14 +5,14 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"knative.dev/test-infra/pkg/gomod"
+	"knative.dev/toolbox/pkg/gomod"
 )
 
 func TestDefaultSelector(t *testing.T) {
 	sel, err := gomod.DefaultSelector("knative.dev")
 	require.NoError(t, err)
 	mods := []string{
-		"knative.dev/test-infra",
+		"knative.dev/toolbox",
 		"knative.dev/serving",
 		"knative.dev/eventing",
 		"knative.dev/pkg",

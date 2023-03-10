@@ -8,3 +8,6 @@ approvers:
 reviewers:
 - productivity-writers
 - productivity-reviewers
+
+labels:
+- area/tools

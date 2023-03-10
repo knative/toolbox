@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"knative.dev/test-infra/pkg/gowork/testdata"
+	"knative.dev/toolbox/pkg/gowork/testdata"
 )
 
 func TestExampleFS(t *testing.T) {
