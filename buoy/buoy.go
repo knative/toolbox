@@ -19,7 +19,7 @@ package main
 import (
 	"log"
 
-	"knative.dev/test-infra/buoy/commands"
+	"knative.dev/toolbox/buoy/commands"
 )
 
 func main() {

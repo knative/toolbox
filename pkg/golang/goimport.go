@@ -22,7 +22,7 @@ import (
 	"net/http"
 	"strings"
 
-	"knative.dev/test-infra/pkg/git"
+	"knative.dev/toolbox/pkg/git"
 
 	"golang.org/x/net/html"
 )

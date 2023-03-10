@@ -26,8 +26,8 @@ import (
 	container "google.golang.org/api/container/v1beta1"
 	"google.golang.org/api/option"
 
-	"knative.dev/test-infra/pkg/clustermanager/e2e-tests/common"
-	"knative.dev/test-infra/pkg/gke"
+	"knative.dev/toolbox/pkg/clustermanager/e2e-tests/common"
+	"knative.dev/toolbox/pkg/gke"
 )
 
 // Provider returns gke

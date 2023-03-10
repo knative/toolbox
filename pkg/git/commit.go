@@ -21,8 +21,8 @@ import (
 	"log"
 	"strings"
 
-	"knative.dev/test-infra/pkg/cmd"
-	"knative.dev/test-infra/pkg/helpers"
+	"knative.dev/toolbox/pkg/cmd"
+	"knative.dev/toolbox/pkg/helpers"
 )
 
 // MakeCommit adds the changed files and create a new Git commit.

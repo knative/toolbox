@@ -25,8 +25,8 @@ import (
 
 	"google.golang.org/api/option"
 
-	"knative.dev/test-infra/pkg/gke"
-	"knative.dev/test-infra/pkg/helpers"
+	"knative.dev/toolbox/pkg/gke"
+	"knative.dev/toolbox/pkg/helpers"
 
 	container "google.golang.org/api/container/v1beta1"
 )

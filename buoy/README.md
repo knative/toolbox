@@ -7,7 +7,7 @@ A tool to encode the Knative release process logic based on go module versions.
 `buoy` can be installed and upgraded by running:
 
 ```shell
-go get knative.dev/test-infra/buoy
+go get knative.dev/toolbox/buoy
 ```
 
 ## Usage

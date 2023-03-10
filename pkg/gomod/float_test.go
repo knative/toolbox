@@ -20,7 +20,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"knative.dev/test-infra/pkg/git"
+	"knative.dev/toolbox/pkg/git"
 )
 
 // TestFloat - This is an integration test, it will make a call out to the internet.
