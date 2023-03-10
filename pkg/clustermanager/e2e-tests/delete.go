@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"log"
 
-	"knative.dev/test-infra/pkg/cmd"
+	"knative.dev/toolbox/pkg/cmd"
 )
 
 // Delete deletes a GKE cluster

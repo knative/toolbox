@@ -21,7 +21,7 @@ import (
 
 	boskoscommon "sigs.k8s.io/boskos/common"
 
-	"knative.dev/test-infra/pkg/clustermanager/e2e-tests/boskos"
+	"knative.dev/toolbox/pkg/clustermanager/e2e-tests/boskos"
 )
 
 const (

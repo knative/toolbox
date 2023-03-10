@@ -25,7 +25,7 @@ import (
 	"time"
 
 	container "google.golang.org/api/container/v1beta1"
-	"knative.dev/test-infra/pkg/gke"
+	"knative.dev/toolbox/pkg/gke"
 )
 
 // Timeout for fake client.

@@ -23,13 +23,13 @@ import (
 
 	"github.com/blang/semver/v4"
 
-	"knative.dev/test-infra/pkg/git"
-	"knative.dev/test-infra/pkg/golang"
+	"knative.dev/toolbox/pkg/git"
+	"knative.dev/toolbox/pkg/golang"
 )
 
 // Check examines a go mod file for dependencies and  determines if each have a release artifact
 // based on the ruleset provided. Check leverages the same rules used by
-// knative.dev/test-infra/pkg/git.Repo().BestRefFor
+// knative.dev/toolbox/pkg/git.Repo().BestRefFor
 func Check(gomod, release, moduleRelease string, selector Matcher, ruleset git.RulesetType, out io.Writer) error {
 	modulePkgs, _, err := Modules([]string{gomod}, selector)
 	if err != nil {

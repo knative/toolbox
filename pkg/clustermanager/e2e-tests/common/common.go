@@ -17,11 +17,8 @@ limitations under the License.
 package common
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
-	"path"
-	"strings"
 )
 
 var (
@@ -39,13 +36,4 @@ func standardExec(name string, args ...string) ([]byte, error) {
 // IsProw checks if the process is initialized by Prow
 func IsProw() bool {
 	return GetOSEnv("PROW_JOB_ID") != ""
-}
-
-// GetRepoName gets repo name by the path where the repo cloned to
-func GetRepoName() (string, error) {
-	out, err := StandardExec("git", "rev-parse", "--show-toplevel")
-	if err != nil {
-		return "", fmt.Errorf("failed git rev-parse --show-toplevel: '%v'", err)
-	}
-	return strings.TrimSpace(path.Base(string(out))), nil
 }

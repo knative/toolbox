@@ -20,8 +20,8 @@ import (
 	"strings"
 	"testing"
 
-	"knative.dev/test-infra/pkg/clustermanager/e2e-tests/common"
-	"knative.dev/test-infra/pkg/cmd"
+	"knative.dev/toolbox/pkg/clustermanager/e2e-tests/common"
+	"knative.dev/toolbox/pkg/cmd"
 )
 
 func TestGetResourceName(t *testing.T) {
@@ -30,8 +30,8 @@ func TestGetResourceName(t *testing.T) {
 		buildNumStr string
 		exp         string
 	}{
-		{true, "12345678901234567890fakebuildnum", "ktest-infra-e2e-cls-12345678901234567890"},
-		{false, "", "ktest-infra-e2e-cls"},
+		{true, "12345678901234567890fakebuildnum", "ktoolbox-e2e-cls-12345678901234567890"},
+		{false, "", "ktoolbox-e2e-cls"},
 	}
 
 	// mock GetOSEnv for testing

@@ -19,7 +19,7 @@ package gke
 import (
 	"log"
 
-	"knative.dev/test-infra/pkg/gke"
+	"knative.dev/toolbox/pkg/gke"
 )
 
 // This is not a real test, it's for documenting purpose, showcasing the usage

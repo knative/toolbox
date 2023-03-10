@@ -22,8 +22,8 @@ import (
 
 	"github.com/blang/semver/v4"
 
-	"knative.dev/test-infra/pkg/git"
-	"knative.dev/test-infra/pkg/golang"
+	"knative.dev/toolbox/pkg/git"
+	"knative.dev/toolbox/pkg/golang"
 )
 
 // ReleaseMeta holds metadata important to module release status.

@@ -25,7 +25,7 @@ import (
 
 	"github.com/google/go-github/v32/github"
 	"github.com/spf13/cobra"
-	"knative.dev/test-infra/pkg/ghutil"
+	"knative.dev/toolbox/pkg/ghutil"
 )
 
 func addActionsCmd(root *cobra.Command) {

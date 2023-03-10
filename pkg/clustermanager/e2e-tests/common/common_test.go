@@ -19,7 +19,6 @@ package common
 import (
 	"errors"
 	"fmt"
-	"reflect"
 	"testing"
 )
 
@@ -50,44 +49,5 @@ func TestStandardExec(t *testing.T) {
 				t.Errorf("%s\noutput got:  '%s'\noutput want: '%s'", errMsg, got, want)
 			}
 		})
-	}
-}
-
-func TestGetRepoName(t *testing.T) {
-	datas := []struct {
-		out    string
-		err    error
-		expOut string
-		expErr error
-	}{
-		{
-			// Good run
-			"a/b/c", nil, "c", nil,
-		}, {
-			// Good run
-			"a/b/c/", nil, "c", nil,
-		}, {
-			// Git error
-			"", fmt.Errorf("git error"), "", fmt.Errorf("failed git rev-parse --show-toplevel: 'git error'"),
-		},
-	}
-
-	oldFunc := StandardExec
-	defer func() {
-		// restore
-		StandardExec = oldFunc
-	}()
-
-	for _, data := range datas {
-		// mock for testing
-		StandardExec = func(name string, args ...string) ([]byte, error) {
-			return []byte(data.out), data.err
-		}
-
-		out, err := GetRepoName()
-		if data.expOut != out || !reflect.DeepEqual(err, data.expErr) {
-			t.Errorf("testing getting repo name with:\n\tmocked git output: '%s'\n\tmocked git err: '%v'\nwant: out - '%s', err - '%v'\ngot: out - '%s', err - '%v'",
-				data.out, data.err, data.expOut, data.expErr, out, err)
-		}
 	}
 }
