@@ -19,13 +19,16 @@ limitations under the License.
 package config
 
 import (
-	"io/ioutil"
+	"embed"
 	"log"
 	"os"
-	"path/filepath"
+	"path"
 
 	"sigs.k8s.io/yaml"
 )
+
+//go:embed config.yaml
+var configFs embed.FS
 
 // configFile saves all information we need, this path is caller based
 const configFile = "config/config.yaml"
@@ -54,12 +57,10 @@ type SlackChannel struct {
 }
 
 func init() {
-	contents, err := ioutil.ReadFile(configFile)
+	contents, err := os.ReadFile(configFile)
 	if err != nil {
-		// If running in container the relative path would not work,
-		// get current file dir and try to resolve it with Abs path
-		dir, _ := filepath.Abs(filepath.Dir(os.Args[0]))
-		contents, err = ioutil.ReadFile(filepath.Join(dir, configFile))
+		// If there's no config file, we will take contents of embedded config
+		contents, err = configFs.ReadFile(path.Base(configFile))
 	}
 	if err != nil {
 		log.Printf("Failed to load the config file: %v", err)
