@@ -20,7 +20,7 @@ import (
 	"flag"
 	"log"
 
-	testPkg "knative.dev/test-infra/pkg/clustermanager/perf-tests/pkg"
+	testPkg "knative.dev/toolbox/pkg/clustermanager/perf-tests/pkg"
 )
 
 // flags supported by this tool

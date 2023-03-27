@@ -22,9 +22,9 @@ import (
 
 	container "google.golang.org/api/container/v1beta1"
 
-	"knative.dev/test-infra/pkg/clustermanager/e2e-tests/boskos"
-	"knative.dev/test-infra/pkg/clustermanager/e2e-tests/common"
-	"knative.dev/test-infra/pkg/gke"
+	"knative.dev/toolbox/pkg/clustermanager/e2e-tests/boskos"
+	"knative.dev/toolbox/pkg/clustermanager/e2e-tests/common"
+	"knative.dev/toolbox/pkg/gke"
 )
 
 // GKEClient implements Client

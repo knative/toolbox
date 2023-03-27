@@ -19,7 +19,7 @@ package e2e_tests
 import (
 	"fmt"
 
-	clm "knative.dev/test-infra/pkg/clustermanager/e2e-tests/gke"
+	clm "knative.dev/toolbox/pkg/clustermanager/e2e-tests/gke"
 )
 
 // RequestWrapper is a wrapper of the GKERequest.

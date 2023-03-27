@@ -28,12 +28,12 @@ import (
 	container "google.golang.org/api/container/v1beta1"
 	boskoscommon "sigs.k8s.io/boskos/common"
 
-	boskosFake "knative.dev/test-infra/pkg/clustermanager/e2e-tests/boskos/fake"
-	"knative.dev/test-infra/pkg/clustermanager/e2e-tests/common"
+	boskosFake "knative.dev/toolbox/pkg/clustermanager/e2e-tests/boskos/fake"
+	"knative.dev/toolbox/pkg/clustermanager/e2e-tests/common"
 
-	"knative.dev/test-infra/pkg/gke"
+	"knative.dev/toolbox/pkg/gke"
 
-	gkeFake "knative.dev/test-infra/pkg/gke/fake"
+	gkeFake "knative.dev/toolbox/pkg/gke/fake"
 
 	"github.com/google/go-cmp/cmp"
 )
@@ -261,7 +261,7 @@ func TestAcquire(t *testing.T) {
 				isProw:  true, nextOpStatus: []string{}, boskosProjs: []string{fakeBoskosProj}, skipCreation: false},
 			want: wantResult{
 				&container.Cluster{
-					Name:         "ktest-infra-e2e-cls-1234",
+					Name:         "ktoolbox-e2e-cls-1234",
 					Location:     "us-central1",
 					Status:       "RUNNING",
 					AddonsConfig: &container.AddonsConfig{},

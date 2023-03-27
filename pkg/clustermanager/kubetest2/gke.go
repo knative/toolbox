@@ -26,10 +26,10 @@ import (
 	"strconv"
 	"strings"
 
-	"knative.dev/test-infra/pkg/cmd"
-	"knative.dev/test-infra/pkg/helpers"
-	"knative.dev/test-infra/pkg/metautil"
-	"knative.dev/test-infra/pkg/prow"
+	"knative.dev/toolbox/pkg/cmd"
+	"knative.dev/toolbox/pkg/helpers"
+	"knative.dev/toolbox/pkg/metautil"
+	"knative.dev/toolbox/pkg/prow"
 )
 
 const (

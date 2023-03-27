@@ -21,8 +21,9 @@ import (
 	"log"
 	"strings"
 
-	"knative.dev/test-infra/pkg/clustermanager/e2e-tests/common"
-	"knative.dev/test-infra/pkg/cmd"
+	"knative.dev/toolbox/pkg/clustermanager/e2e-tests/common"
+	"knative.dev/toolbox/pkg/cmd"
+	"knative.dev/toolbox/pkg/gowork"
 )
 
 const (
@@ -42,10 +43,13 @@ type ResourceType string
 // shouldn't fail
 func getResourceName(rt ResourceType) (string, error) {
 	var resName string
-	repoName, err := common.GetRepoName()
+	os := gowork.RealSystem{}
+	currModule, err := gowork.Current(os, os)
 	if err != nil {
 		return "", fmt.Errorf("failed getting reponame for forming resource name: '%v'", err)
 	}
+	parts := strings.SplitN(currModule.Name, "/", 3)
+	repoName := parts[1]
 	resName = fmt.Sprintf("k%s-%s", repoName, string(rt))
 	if common.IsProw() {
 		buildNumStr := common.GetOSEnv("BUILD_NUMBER")

@@ -23,10 +23,10 @@ import (
 
 	container "google.golang.org/api/container/v1beta1"
 
-	clm "knative.dev/test-infra/pkg/clustermanager/e2e-tests/gke"
-	"knative.dev/test-infra/pkg/cmd"
-	"knative.dev/test-infra/pkg/gke"
-	"knative.dev/test-infra/pkg/metautil"
+	clm "knative.dev/toolbox/pkg/clustermanager/e2e-tests/gke"
+	"knative.dev/toolbox/pkg/cmd"
+	"knative.dev/toolbox/pkg/gke"
+	"knative.dev/toolbox/pkg/metautil"
 )
 
 const (

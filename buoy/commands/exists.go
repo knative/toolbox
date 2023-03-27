@@ -23,7 +23,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"knative.dev/test-infra/pkg/gomod"
+	"knative.dev/toolbox/pkg/gomod"
 )
 
 func addExistsCmd(root *cobra.Command) {

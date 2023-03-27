@@ -23,7 +23,7 @@ import (
 	"strings"
 	"testing"
 
-	"knative.dev/test-infra/pkg/clustermanager/e2e-tests/common"
+	"knative.dev/toolbox/pkg/clustermanager/e2e-tests/common"
 )
 
 var (
