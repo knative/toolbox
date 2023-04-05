@@ -18,9 +18,8 @@ package kubetest2
 
 import (
 	"github.com/spf13/cobra"
-
+	"knative.dev/toolbox/kntest/pkg/cluster/manager/kubetest2"
 	"knative.dev/toolbox/kntest/pkg/kubetest2/gke"
-	"knative.dev/toolbox/pkg/clustermanager/kubetest2"
 )
 
 // AddCommand add the command for running kubetest2.

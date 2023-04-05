@@ -41,15 +41,9 @@ github.com/ProtonMail/go-crypto/openpgp/s2k
 # github.com/acomagu/bufpipe v1.0.3
 ## explicit; go 1.12
 github.com/acomagu/bufpipe
-# github.com/beorn7/perks v1.0.1
-## explicit; go 1.11
-github.com/beorn7/perks/quantile
 # github.com/blang/semver/v4 v4.0.0
 ## explicit; go 1.14
 github.com/blang/semver/v4
-# github.com/cespare/xxhash/v2 v2.1.2
-## explicit; go 1.11
-github.com/cespare/xxhash/v2
 # github.com/davecgh/go-spew v1.1.1
 ## explicit
 github.com/davecgh/go-spew/spew
@@ -197,12 +191,6 @@ github.com/googleapis/gax-go/v2/internal
 # github.com/googleapis/go-type-adapters v1.0.0
 ## explicit; go 1.11
 github.com/googleapis/go-type-adapters/adapters
-# github.com/hashicorp/errwrap v1.1.0
-## explicit
-github.com/hashicorp/errwrap
-# github.com/hashicorp/go-multierror v1.1.1
-## explicit; go 1.13
-github.com/hashicorp/go-multierror
 # github.com/imdario/mergo v0.3.12
 ## explicit; go 1.13
 github.com/imdario/mergo
@@ -221,15 +209,14 @@ github.com/kelseyhightower/envconfig
 # github.com/kevinburke/ssh_config v0.0.0-20201106050909-4977a11b4351
 ## explicit
 github.com/kevinburke/ssh_config
+# github.com/klauspost/compress v1.14.4
+## explicit; go 1.15
 # github.com/kr/pretty v0.2.1
 ## explicit; go 1.12
 github.com/kr/pretty
 # github.com/kr/text v0.2.0
 ## explicit
 github.com/kr/text
-# github.com/matttproud/golang_protobuf_extensions v1.0.2-0.20181231171920-c182affec369
-## explicit; go 1.9
-github.com/matttproud/golang_protobuf_extensions/pbutil
 # github.com/mitchellh/go-homedir v1.1.0
 ## explicit
 github.com/mitchellh/go-homedir
@@ -246,23 +233,6 @@ github.com/pkg/errors
 # github.com/pmezard/go-difflib v1.0.0
 ## explicit
 github.com/pmezard/go-difflib/difflib
-# github.com/prometheus/client_golang v1.12.1
-## explicit; go 1.13
-github.com/prometheus/client_golang/prometheus
-github.com/prometheus/client_golang/prometheus/internal
-# github.com/prometheus/client_model v0.2.0
-## explicit; go 1.9
-github.com/prometheus/client_model/go
-# github.com/prometheus/common v0.32.1
-## explicit; go 1.13
-github.com/prometheus/common/expfmt
-github.com/prometheus/common/internal/bitbucket.org/ww/goautoneg
-github.com/prometheus/common/model
-# github.com/prometheus/procfs v0.7.3
-## explicit; go 1.13
-github.com/prometheus/procfs
-github.com/prometheus/procfs/internal/fs
-github.com/prometheus/procfs/internal/util
 # github.com/sergi/go-diff v1.1.0
 ## explicit; go 1.12
 github.com/sergi/go-diff/diffmatchpatch
@@ -321,9 +291,6 @@ go.uber.org/zap/internal/bufferpool
 go.uber.org/zap/internal/color
 go.uber.org/zap/internal/exit
 go.uber.org/zap/zapcore
-# go4.org v0.0.0-20201209231011-d4a079459e60
-## explicit; go 1.13
-go4.org/bytereplacer
 # golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d
 ## explicit; go 1.17
 golang.org/x/crypto/blowfish
@@ -555,28 +522,10 @@ gopkg.in/yaml.v2
 gopkg.in/yaml.v3
 # k8s.io/apimachinery v0.24.3
 ## explicit; go 1.16
-k8s.io/apimachinery/pkg/util/errors
 k8s.io/apimachinery/pkg/util/sets
-k8s.io/apimachinery/pkg/util/validation
-k8s.io/apimachinery/pkg/util/validation/field
-# k8s.io/test-infra v0.0.0-20220913174101-46ac1a6cf806
-## explicit; go 1.18
-k8s.io/test-infra/prow/config/secret
-k8s.io/test-infra/prow/logrusutil
-k8s.io/test-infra/prow/secretutil
-k8s.io/test-infra/prow/version
-# k8s.io/utils v0.0.0-20220725171434-9bab9ef40391
-## explicit; go 1.12
-k8s.io/utils/internal/third_party/forked/golang/net
-k8s.io/utils/net
 # knative.dev/hack v0.0.0-20230317131237-3b8ef01d7c4f
 ## explicit; go 1.18
 knative.dev/hack
-# sigs.k8s.io/boskos v0.0.0-20230301234717-8b694e7dafa2
-## explicit; go 1.18
-sigs.k8s.io/boskos/client
-sigs.k8s.io/boskos/common
-sigs.k8s.io/boskos/storage
 # sigs.k8s.io/yaml v1.3.0
 ## explicit; go 1.12
 sigs.k8s.io/yaml

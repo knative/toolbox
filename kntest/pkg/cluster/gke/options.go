@@ -18,8 +18,7 @@ package gke
 
 import (
 	"github.com/spf13/cobra"
-
-	clm "knative.dev/toolbox/pkg/clustermanager/e2e-tests"
+	clm "knative.dev/toolbox/kntest/pkg/cluster/manager/e2e-tests"
 )
 
 func addCommonOptions(clusterCmd *cobra.Command, rw *clm.RequestWrapper) {

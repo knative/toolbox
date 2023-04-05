@@ -20,8 +20,7 @@ import (
 	"log"
 
 	"github.com/spf13/cobra"
-
-	"knative.dev/toolbox/pkg/clustermanager/kubetest2"
+	"knative.dev/toolbox/kntest/pkg/cluster/manager/kubetest2"
 )
 
 // AddCommand adds gke subcommands.

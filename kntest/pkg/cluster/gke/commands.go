@@ -20,9 +20,8 @@ import (
 	"log"
 
 	"github.com/spf13/cobra"
-
-	clm "knative.dev/toolbox/pkg/clustermanager/e2e-tests"
-	"knative.dev/toolbox/pkg/clustermanager/e2e-tests/gke"
+	e2e_tests2 "knative.dev/toolbox/kntest/pkg/cluster/manager/e2e-tests"
+	"knative.dev/toolbox/kntest/pkg/cluster/manager/e2e-tests/gke"
 )
 
 // AddCommands adds gke subcommands.
@@ -32,7 +31,7 @@ func AddCommands(clusterCmd *cobra.Command) {
 		Short: "gke related commands.",
 	}
 
-	rw := &clm.RequestWrapper{
+	rw := &e2e_tests2.RequestWrapper{
 		Request: gke.GKERequest{},
 	}
 	addCommonOptions(gkeCmd, rw)
@@ -42,7 +41,7 @@ func AddCommands(clusterCmd *cobra.Command) {
 	clusterCmd.AddCommand(gkeCmd)
 }
 
-func addCreate(cc *cobra.Command, rw *clm.RequestWrapper) {
+func addCreate(cc *cobra.Command, rw *e2e_tests2.RequestWrapper) {
 	var createCmd = &cobra.Command{
 		Use:   "create",
 		Short: "Create a GKE cluster.",
@@ -55,7 +54,7 @@ func addCreate(cc *cobra.Command, rw *clm.RequestWrapper) {
 			if len(regions) > 1 {
 				rw.Request.BackupRegions = regions[1:]
 			}
-			if _, err := clm.Create(rw); err != nil {
+			if _, err := e2e_tests2.Create(rw); err != nil {
 				log.Fatalf("Error creating the cluster: %v", err)
 			}
 		},
@@ -64,12 +63,12 @@ func addCreate(cc *cobra.Command, rw *clm.RequestWrapper) {
 	cc.AddCommand(createCmd)
 }
 
-func addDelete(clusterCmd *cobra.Command, rw *clm.RequestWrapper) {
+func addDelete(clusterCmd *cobra.Command, rw *e2e_tests2.RequestWrapper) {
 	var deleteCmd = &cobra.Command{
 		Use:   "delete",
 		Short: "Delete the current GKE cluster.",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := clm.Delete(rw); err != nil {
+			if err := e2e_tests2.Delete(rw); err != nil {
 				log.Fatalf("Error deleting the cluster: %v", err)
 			}
 		},
@@ -77,12 +76,12 @@ func addDelete(clusterCmd *cobra.Command, rw *clm.RequestWrapper) {
 	clusterCmd.AddCommand(deleteCmd)
 }
 
-func addGet(clusterCmd *cobra.Command, rw *clm.RequestWrapper) {
+func addGet(clusterCmd *cobra.Command, rw *e2e_tests2.RequestWrapper) {
 	var getCmd = &cobra.Command{
 		Use:   "get",
 		Short: "Get the existing cluster from kubeconfig or gcloud.",
 		Run: func(cmd *cobra.Command, args []string) {
-			if _, err := clm.Get(rw); err != nil {
+			if _, err := e2e_tests2.Get(rw); err != nil {
 				log.Fatalf("Error getting the cluster: %v", err)
 			}
 		},
