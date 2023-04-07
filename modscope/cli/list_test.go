@@ -25,7 +25,6 @@ func TestListCmd(t *testing.T) {
 		"knative.dev/toolbox",
 		"knative.dev/toolbox/provenance-generator",
 		"knative.dev/toolbox/release-jobs-syncer",
-		"knative.dev/toolbox/kntest",
 	}, "\n") + "\n"
 	assert.NoError(t, err)
 	assert.Equal(t, modules, buf.String())
