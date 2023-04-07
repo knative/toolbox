@@ -18,7 +18,8 @@ package gke
 
 import (
 	"github.com/spf13/cobra"
-	"knative.dev/toolbox/kntest/pkg/cluster/manager/kubetest2"
+
+	"knative.dev/toolbox/pkg/clustermanager/kubetest2"
 )
 
 func addOptions(gkeCmd *cobra.Command, cfg *kubetest2.GKEClusterConfig) {

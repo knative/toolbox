@@ -14,26 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package kubetest2
+package e2e_tests
 
 import (
-	"github.com/spf13/cobra"
+	"fmt"
 
-	"knative.dev/toolbox/kntest/pkg/kubetest2/gke"
-	"knative.dev/toolbox/pkg/clustermanager/kubetest2"
+	clm "knative.dev/toolbox/pkg/clustermanager/e2e-tests/gke"
 )
 
-// AddCommand add the command for running kubetest2.
-func AddCommand(topLevel *cobra.Command) {
-	var kubetest2Cmd = &cobra.Command{
-		Use:   "kubetest2",
-		Short: "Simple wrapper of kubetest2 commands for Knative testing.",
+// RequestWrapper is a wrapper of the GKERequest.
+type RequestWrapper struct {
+	Request clm.GKERequest
+	Regions []string
+}
+
+func (rw *RequestWrapper) acquire() (*clm.GKECluster, error) {
+	gkeClient := clm.GKEClient{}
+	clusterOps := gkeClient.Setup(rw.Request)
+	gkeOps := clusterOps.(*clm.GKECluster)
+	if err := gkeOps.Acquire(); err != nil || gkeOps.Cluster == nil {
+		return nil, fmt.Errorf("failed acquiring GKE cluster: %w", err)
 	}
-
-	kubetest2Options := &kubetest2.Options{}
-	addOptions(kubetest2Cmd, kubetest2Options)
-
-	gke.AddCommand(kubetest2Cmd, kubetest2Options)
-
-	topLevel.AddCommand(kubetest2Cmd)
+	return gkeOps, nil
 }

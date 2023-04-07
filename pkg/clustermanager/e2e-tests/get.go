@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Knative Authors
+Copyright 2019 The Knative Authors
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package kubetest2
+package e2e_tests
 
 import (
-	"github.com/spf13/cobra"
-
-	"knative.dev/toolbox/pkg/clustermanager/kubetest2"
+	clm "knative.dev/toolbox/pkg/clustermanager/e2e-tests/gke"
 )
 
-func addOptions(kubetest2Cmd *cobra.Command, opts *kubetest2.Options) {
-	pf := kubetest2Cmd.PersistentFlags()
-	pf.StringVar(&opts.TestCommand, "test-command", "", "test command for running the tests")
-	pf.BoolVar(&opts.SaveMetaData, "save-meta-data", true, "whether or not to save cluster info into metadata.json")
+// Get gets a GKE cluster
+func Get(rw *RequestWrapper) (*clm.GKECluster, error) {
+	rw.Request.SkipCreation = true
+	// Reuse `Create` for getting operation, so that we can reuse the same logic
+	// such as protected project/cluster etc.
+	return Create(rw)
 }
