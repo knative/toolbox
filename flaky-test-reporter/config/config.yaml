@@ -79,7 +79,7 @@ jobConfigs:
       - name: s390x
         identity: C027YB4QUUU
   - name: continuous_eventing-kafka-broker_main_periodic
-    org: knative-sandbox
+    org: knative-extension
     repo: eventing-kafka-broker
     type: postsubmit
     issueRepo: eventing-kafka-broker
