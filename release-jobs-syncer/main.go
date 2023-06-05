@@ -32,7 +32,7 @@ import (
 
 const (
 	org  = "knative"
-	repo = "test-infra"
+	repo = "infra"
 	// PRHead is branch name where the changes occur
 	PRHead = "releasebranch"
 	// PRBase is the branch name where PR targets
