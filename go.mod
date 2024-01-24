@@ -1,6 +1,6 @@
 module knative.dev/toolbox
 
-go 1.18
+go 1.21
 
 require (
 	cloud.google.com/go/storage v1.22.1
@@ -21,7 +21,7 @@ require (
 	github.com/wavesoftware/go-commandline v1.0.0
 	go.uber.org/atomic v1.9.0
 	go.uber.org/zap v1.19.1
-	golang.org/x/mod v0.6.0-dev.0.20220818022119-ed83ed61efb9
+	golang.org/x/mod v0.14.0
 	golang.org/x/net v0.0.0-20220607020251-c690dde0001d
 	golang.org/x/oauth2 v0.0.0-20220608161450-d0670ef3b1eb
 	google.golang.org/api v0.83.0
