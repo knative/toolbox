@@ -1,7 +1,7 @@
-go 1.18
+go 1.21
 
 use (
-  .
-  provenance-generator
-  release-jobs-syncer
+	.
+	provenance-generator
+	release-jobs-syncer
 )
