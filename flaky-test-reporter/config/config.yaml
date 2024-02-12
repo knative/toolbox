@@ -42,21 +42,7 @@ jobConfigs:
     slackChannels:
       - name: knative-serving-bots
         identity: C04MYJBP3H7
-  - name: s390x-contour-tests_serving_main_periodic
-    org: knative
-    repo: serving
-    type: postsubmit
-    slackChannels:
-      - name: knative-serving-bots
-        identity: C04MYJBP3H7
   - name: kourier-stable_serving_main_periodic
-    org: knative
-    repo: serving
-    type: postsubmit
-    slackChannels:
-      - name: knative-serving-bots
-        identity: C04MYJBP3H7
-  - name: s390x-kourier-tests_serving_main_periodic
     org: knative
     repo: serving
     type: postsubmit
@@ -71,29 +57,8 @@ jobConfigs:
     slackChannels:
       - name: knative-eventing
         identity: C04LMU33V1S
-  - name: s390x-e2e-tests_eventing_main_periodic
-    org: knative
-    repo: eventing
-    type: postsubmit
-    slackChannels:
-      - name: knative-eventing
-        identity: C04LMU33V1S
   - name: continuous_eventing-kafka-broker_main_periodic
     org: knative-extensions
     repo: eventing-kafka-broker
     type: postsubmit
     issueRepo: eventing-kafka-broker
-  - name: s390x-e2e-tests_operator_main_periodic
-    org: knative
-    repo: operator
-    type: postsubmit
-    slackChannels:
-      - name: knative-eventing
-        identity: C04LMU33V1S
-  - name: s390x-e2e-tests_client_main_periodic
-    org: knative
-    repo: client
-    type: postsubmit
-    slackChannels:
-      - name: knative-client
-        identity: C04LY4SKBQR
