@@ -19,10 +19,14 @@ package test
 import (
 	"path"
 	"runtime"
+	"testing"
 )
 
 // Rootdir returns a path to a root directory of toolbox repo.
 func Rootdir() string {
+	if !testing.Testing() {
+		panic("test.WithDirectory can be used only in tests")
+	}
 	_, curfile, _, _ := runtime.Caller(0) //nolint:dogsled
 	return path.Dir(path.Dir(path.Dir(curfile)))
 }

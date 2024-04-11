@@ -18,6 +18,7 @@ package main
 
 import (
 	"bytes"
+	"path"
 	"reflect"
 	"strings"
 	"testing"
@@ -39,7 +40,7 @@ func TestMainFunc(t *testing.T) {
 	}, {
 		name: "no options",
 		args: []string{},
-		tags: []string{"test_tag_v1", "test_tag_v2", "test_tag_v3"},
+		tags: []string{"test_tag_v1", "test_tag_v2"},
 	}}
 	for _, tc := range tcs {
 		tc := tc
@@ -93,7 +94,7 @@ func executeMain(args []string) testExecution {
 	defer func() {
 		cli.Options = nil
 	}()
-	test.WithDirectory(test.Rootdir(), func() {
+	test.WithDirectory(path.Join(test.Rootdir(), "go-ls-tags"), func() {
 		main()
 	})
 

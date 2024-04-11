@@ -1,5 +1,5 @@
 // This file is used for testing purposes.
-//go:build test_tag_v1 || test_tag_v2 || test_tag_v3
+//go:build test_tag_v1 || test_tag_v2 || (test_tag_ignored1 && test_tag_ignored2)
 
 /*
 Copyright 2022 The Knative Authors

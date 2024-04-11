@@ -19,11 +19,15 @@ package test
 import (
 	"log"
 	"os"
+	"testing"
 )
 
 // WithDirectory executes a function with a current working directory set
 // to a given directory.
 func WithDirectory(dir string, fn func()) {
+	if !testing.Testing() {
+		panic("test.WithDirectory can be used only in tests")
+	}
 	wd, err := os.Getwd()
 	if err != nil {
 		log.Panic(err)
