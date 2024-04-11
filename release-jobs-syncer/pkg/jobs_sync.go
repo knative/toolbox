@@ -18,7 +18,6 @@ package pkg
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -38,16 +37,10 @@ const (
 `
 )
 
-// extraPeriodicProwJobsToSync contains the extra periodic Prow jobs to sync for
-// each repo.
+// extraPeriodicProwJobsToSync contains the extra periodic Prow jobs to sync for each repo.
 // By default only the continuous Prow jobs will be synced in order to reduce
 // the load with Prow.
-var extraPeriodicProwJobsToSync map[string]sets.String = map[string]sets.String{
-	"knative/serving":  sets.NewString("s390x-kourier-tests", "s390x-contour-tests", "ppc64le-kourier-tests", "ppc64le-contour-tests"),
-	"knative/eventing": sets.NewString("s390x-e2e-tests", "s390x-e2e-reconciler-tests", "ppc64le-e2e-tests", "ppc64le-e2e-reconciler-tests"),
-	"knative/client":   sets.NewString("s390x-e2e-tests", "ppc64le-e2e-tests"),
-	"knative/operator": sets.NewString("s390x-e2e-tests", "ppc64le-e2e-tests"),
-}
+var extraPeriodicProwJobsToSync map[string]sets.String = map[string]sets.String{}
 
 func syncProwJobsForRelease(configRootPath, org, repo, releaseToRemove, releaseToAdd string) error {
 	mainPJConfigPath := filepath.Join(configRootPath, org, repo+".yaml")
@@ -114,7 +107,7 @@ func syncProwJobsForRelease(configRootPath, org, repo, releaseToRemove, releaseT
 		bs, _ := yaml.Marshal(releaseJobsConfig)
 		bs = append([]byte(fileHeader), bs...)
 		log.Printf("Adding config file %q", filePathToAdd)
-		ioutil.WriteFile(filePathToAdd, bs, 0o644)
+		os.WriteFile(filePathToAdd, bs, 0o644)
 	}
 
 	return nil

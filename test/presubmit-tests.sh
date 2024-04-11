@@ -14,13 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+set -o errexit
+set -o nounset
+set -o pipefail
+
 # This script runs the presubmit tests; it is started by prow for each PR.
 # For convenience, it can also be executed manually.
 # Running the script without parameters, or with the --all-tests
 # flag, causes all tests to be executed, in the right order.
 # Use the flags --build-tests, --unit-tests and --integration-tests
 # to run a specific set of tests.
-source "$(dirname "${BASH_SOURCE[0]}")/../vendor/knative.dev/hack/presubmit-tests.sh"
+# shellcheck disable=SC1090
+source "$(go run knative.dev/hack/cmd/script presubmit-tests.sh)"
 
 # Run our custom build tests after the standard build tests.
 
