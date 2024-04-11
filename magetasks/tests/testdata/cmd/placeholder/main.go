@@ -14,16 +14,15 @@
  limitations under the License.
 */
 
-package metadata_test
+// Placeholder command
+package main
 
 import (
-	"testing"
+	"log"
 
-	"gotest.tools/v3/assert"
-	"knative.dev/toolbox/magetasks/tests/example/pkg/metadata"
+	"knative.dev/toolbox/magetasks/tests/testdata/pkg/metadata"
 )
 
-func TestImagePath(t *testing.T) {
-	p := metadata.ImagePath(metadata.SampleImage)
-	assert.Check(t, len(p) > 2)
+func main() {
+	log.Printf("Placeholder code! Version: %s\n", metadata.Version)
 }

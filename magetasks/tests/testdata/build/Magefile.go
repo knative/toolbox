@@ -29,8 +29,8 @@ import (
 	"knative.dev/toolbox/magetasks/pkg/checks"
 	"knative.dev/toolbox/magetasks/pkg/image"
 	"knative.dev/toolbox/magetasks/pkg/knative"
-	"knative.dev/toolbox/magetasks/tests/example/build/overrides"
-	"knative.dev/toolbox/magetasks/tests/example/pkg/metadata"
+	"knative.dev/toolbox/magetasks/tests/testdata/build/overrides"
+	"knative.dev/toolbox/magetasks/tests/testdata/pkg/metadata"
 )
 
 // Default target is set to Build
@@ -42,10 +42,10 @@ func init() { //nolint:gochecknoinits
 	archs := []platform.Architecture{
 		platform.AMD64, platform.ARM64, platform.S390X, platform.PPC64LE,
 	}
-	dummy := artifact.Image{
-		Metadata: config.Metadata{Name: "dummy"},
+	placeholder := artifact.Image{
+		Metadata: config.Metadata{Name: "placeholder"},
 		Labels: map[string]config.Resolver{
-			"description": config.StaticResolver("A dummy image description"),
+			"description": config.StaticResolver("A placeholder image description"),
 		},
 		Architectures: archs,
 	}
@@ -58,9 +58,9 @@ func init() { //nolint:gochecknoinits
 			Name: "other",
 			BuildVariables: buildvars.Assemble([]buildvars.Operator{
 				image.InfluenceableReference{
-					Path:        metadata.ImagePath(metadata.DummyImage),
-					EnvVariable: "MAGETASKS_EXAMPLE_DUMMY_IMAGE",
-					Image:       dummy,
+					Path:        metadata.ImagePath(metadata.PlaceholderImage),
+					EnvVariable: "MAGETASKS_EXAMPLE_PLACEHOLDER_IMAGE",
+					Image:       placeholder,
 				},
 				image.InfluenceableReference{
 					Path:        metadata.ImagePath(metadata.SampleImage),
@@ -82,7 +82,7 @@ func init() { //nolint:gochecknoinits
 			Path: metadata.VersionPath(), Resolver: knative.NewVersionResolver(),
 		},
 		Artifacts: []config.Artifact{
-			dummy, sampleimage, other,
+			placeholder, sampleimage, other,
 		},
 		Checks: []config.Task{
 			checks.GolangCiLint(func(opts *checks.GolangCiLintOptions) {

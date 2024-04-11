@@ -29,7 +29,7 @@ const AnyVersion = ">=0.0.0"
 // one within given version range.
 type IsLatestResolver func(version semver.Version, versionRange semver.Range) (bool, error)
 
-// IsLatest does basic sanity checking on version and range, before executing
+// IsLatest does basic coherence checking on version and range, before executing
 // provided resolver to answer if given version is the latest within the given
 // version range.
 func IsLatest(version, versionRange string, resolver IsLatestResolver) (bool, error) {

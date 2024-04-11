@@ -22,8 +22,8 @@ import (
 )
 
 var (
-	// DummyImageRef holds information about companion dummy image.
-	DummyImageRef = "" //nolint:gochecknoglobals
+	// PlaceholderImageRef holds information about companion placeholder image.
+	PlaceholderImageRef = "" //nolint:gochecknoglobals
 	// SampleImageRef holds information about companion sample image.
 	SampleImageRef = "" //nolint:gochecknoglobals
 	// ImageBasename holds a basename of a image, so the development reference
@@ -37,20 +37,20 @@ var (
 type Image string
 
 const (
-	// DummyImage represents a dummy image.
-	DummyImage Image = "dummy"
+	// PlaceholderImage represents a placeholder image.
+	PlaceholderImage Image = "placeholder"
 	// SampleImage represents a sample image.
 	SampleImage Image = "sampleimage"
 )
 
 // ResolveImage will try to resolve the image reference from set values. If
-// DummyImageRef is given it will be used, otherwise the ImageBasename and Version will
+// PlaceholderImageRef is given it will be used, otherwise the ImageBasename and Version will
 // be used.
 func ResolveImage(image Image) string {
 	ref := func() string {
 		switch image {
-		case DummyImage:
-			return DummyImageRef
+		case PlaceholderImage:
+			return PlaceholderImageRef
 		case SampleImage:
 			return SampleImageRef
 		}
@@ -68,8 +68,8 @@ func ResolveImage(image Image) string {
 func ImagePath(image Image) string {
 	variable := func() string {
 		switch image {
-		case DummyImage:
-			return "DummyImageRef"
+		case PlaceholderImage:
+			return "PlaceholderImageRef"
 		case SampleImage:
 			return "SampleImageRef"
 		}

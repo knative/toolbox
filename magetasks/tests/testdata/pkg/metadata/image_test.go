@@ -14,15 +14,16 @@
  limitations under the License.
 */
 
-// Dummy command
-package main
+package metadata_test
 
 import (
-	"log"
+	"testing"
 
-	"knative.dev/toolbox/magetasks/tests/example/pkg/metadata"
+	"gotest.tools/v3/assert"
+	"knative.dev/toolbox/magetasks/tests/testdata/pkg/metadata"
 )
 
-func main() {
-	log.Printf("Dummy code! Version: %s\n", metadata.Version)
+func TestImagePath(t *testing.T) {
+	p := metadata.ImagePath(metadata.SampleImage)
+	assert.Check(t, len(p) > 2)
 }

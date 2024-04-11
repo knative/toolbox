@@ -14,23 +14,15 @@
  limitations under the License.
 */
 
-// Other command
+// Sampleimage command
 package main
 
 import (
 	"log"
 
-	"knative.dev/toolbox/magetasks/tests/example/pkg/metadata"
+	"knative.dev/toolbox/magetasks/tests/testdata/pkg/metadata"
 )
 
 func main() {
-	log.Printf("Version: %s\n", metadata.Version)
-	log.Println("Images:")
-	images := []metadata.Image{
-		metadata.DummyImage,
-		metadata.SampleImage,
-	}
-	for _, image := range images {
-		log.Printf(" %s: %s\n", image, metadata.ResolveImage(image))
-	}
+	log.Printf("Sample Image! Version: %s\n", metadata.Version)
 }

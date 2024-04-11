@@ -33,10 +33,10 @@ func TestProjectBuild(t *testing.T) {
 	if testing.Short() {
 		t.Skip("short tests only")
 	}
-	c := mkCmd("./example", "./mage", "clean", "build")
+	c := mkCmd("./testdata", "./mage", "clean", "build")
 	assertCommandStarted(t, c)
 	assertCommandSucceded(t, c)
-	c = mkCmd("./example/build/_output/bin",
+	c = mkCmd("./testdata/build/_output/bin",
 		fmt.Sprintf("./other-%s-%s", runtime.GOOS, runtime.GOARCH))
 	assertCommandStarted(t, c)
 	assertCommandSucceded(t, c)
