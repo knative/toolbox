@@ -42,25 +42,37 @@ func TestApp(t *testing.T) {
 	}, {
 		name: "no options",
 		args: []string{},
-		tags: []string{"test_tag_v1", "test_tag_v2", "test_tag_v3"},
+		tags: []string{"test_tag_v1", "test_tag_v2"},
 	}, {
 		name:      "with comma joiner",
 		args:      []string{"--joiner", ","},
-		fragments: []string{"test_tag_v1,test_tag_v2,test_tag_v3"},
+		fragments: []string{"test_tag_v1,test_tag_v2"},
 	}, {
 		name: "using absolute ignorefile",
 		args: []string{
 			"--ignore-file",
 			path.Join(test.Rootdir(), "go-ls-tags", tags.DefaultIgnoreFile),
 		},
-		tags: []string{"test_tag_v2"},
+		tags: []string{"test_tag_v1", "test_tag_v2"},
 	}, {
 		name: "using relative ignorefile",
 		args: []string{
 			"--ignore-file",
-			path.Join("go-ls-tags", tags.DefaultIgnoreFile),
+			tags.DefaultIgnoreFile,
 		},
-		tags: []string{"test_tag_v2"},
+		tags: []string{"test_tag_v1", "test_tag_v2"},
+	}, {
+		name: "using non-existing ignorefile",
+		args: []string{
+			"--ignore-file",
+			"not-existing-file" + tags.DefaultIgnoreFile,
+		},
+		tags: []string{
+			"test_tag_ignored1",
+			"test_tag_ignored2",
+			"test_tag_v1",
+			"test_tag_v2",
+		},
 	}}
 	for _, tc := range tcs {
 		tc := tc
@@ -105,7 +117,7 @@ func (tc *testCase) test(t *testing.T) {
 
 func execute(args []string) testExecution {
 	te := testExecution{}
-	test.WithDirectory(test.Rootdir(), func() {
+	test.WithDirectory(path.Join(test.Rootdir(), "go-ls-tags"), func() {
 		err := commandline.New(cli.App{}).Execute(
 			commandline.WithArgs(args...),
 			commandline.WithOutput(&te.out),

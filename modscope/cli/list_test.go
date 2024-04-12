@@ -23,6 +23,7 @@ func TestListCmd(t *testing.T) {
 
 	modules := strings.Join([]string{
 		"knative.dev/toolbox",
+		"knative.dev/toolbox/magetasks",
 		"knative.dev/toolbox/provenance-generator",
 		"knative.dev/toolbox/release-jobs-syncer",
 	}, "\n") + "\n"

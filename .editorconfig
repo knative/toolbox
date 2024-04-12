@@ -14,5 +14,6 @@ indent_size = 2
 [{*.go,go.mod,go.work,Makefile}]
 indent_style = tab
 
+# Ignore paths
 [LICENSE]
-indent_style = unset
+indent_size = unset
