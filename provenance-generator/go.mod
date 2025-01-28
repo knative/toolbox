@@ -1,6 +1,6 @@
 module knative.dev/toolbox/provenance-generator
 
-go 1.21
+go 1.22.7
 
 require (
 	github.com/google/go-cmp v0.6.0

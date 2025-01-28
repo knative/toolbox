@@ -1,6 +1,6 @@
 module knative.dev/toolbox/magetasks
 
-go 1.21
+go 1.22.7
 
 require (
 	github.com/blang/semver/v4 v4.0.0

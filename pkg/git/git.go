@@ -27,18 +27,21 @@ import (
 )
 
 // Repo is a simplified git remote, containing only the list of tags, default
-// branch and branches.
+// branch, branches, URL and submodule information.
 type Repo struct {
 	Ref           string
 	DefaultBranch string
 	Tags          []string
 	Branches      []string
+	Submodule     string
+	URL           string
 }
 
 // GetRepo will fetch a git repo and process it into a Repo object.
 func GetRepo(ref, url string) (*Repo, error) {
 	repo := new(Repo)
 	repo.Ref = ref
+	repo.URL = url
 
 	rem := git.NewRemote(memory.NewStorage(), &config.RemoteConfig{
 		Name: "origin",
