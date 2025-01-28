@@ -22,6 +22,7 @@ import (
 	"github.com/blang/semver/v4"
 	fixtures "github.com/go-git/go-git-fixtures/v4"
 	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGetRepo_BasicOne(t *testing.T) {
@@ -54,15 +55,17 @@ func TestGetRepo_Error(t *testing.T) {
 }
 
 func TestRepo_BestRefFor(t *testing.T) {
-	repo := &Repo{
+	repo := Repo{
 		Ref:           "ref",
 		DefaultBranch: "main",
 		Tags:          []string{"v0.1.0", "bar", "v0.2.0", "baz", "v0.2.1", "v0.2.2-rc.1", "v0.2.2+build", "foo"},
 		Branches:      []string{"release-0.1", "bar", "release-0.2", "baz", "main", "release-0.3", "release-1.0"},
 	}
+	submoduleRepo := repo
+	submoduleRepo.Submodule = "sub"
 
 	tests := map[string]struct {
-		repo          *Repo
+		repo          Repo
 		version       semver.Version
 		moduleVersion semver.Version
 		want          string
@@ -81,6 +84,13 @@ func TestRepo_BestRefFor(t *testing.T) {
 			version: semver.MustParse("0.2.0"),
 			want:    "ref@v0.2.1",
 			release: ReleaseRef,
+			rule:    AnyRule,
+		},
+		"Any - v0.2 - with submodule": {
+			repo:    submoduleRepo,
+			version: semver.MustParse("0.2.0"),
+			want:    "ref@release-0.2",
+			release: ReleaseBranchRef,
 			rule:    AnyRule,
 		},
 		"Any - v0.3": {
@@ -118,6 +128,13 @@ func TestRepo_BestRefFor(t *testing.T) {
 			version: semver.MustParse("0.2.0"),
 			want:    "ref@v0.2.1",
 			release: ReleaseRef,
+			rule:    ReleaseOrReleaseBranchRule,
+		},
+		"ReleaseOrReleaseBranch - v0.2 - Submodule": {
+			repo:    submoduleRepo,
+			version: semver.MustParse("0.2.0"),
+			want:    "ref@release-0.2",
+			release: ReleaseBranchRef,
 			rule:    ReleaseOrReleaseBranchRule,
 		},
 		"ReleaseOrReleaseBranch - v0.3": {
@@ -163,6 +180,13 @@ func TestRepo_BestRefFor(t *testing.T) {
 			version: semver.MustParse("0.2.0"),
 			want:    "ref@v0.2.1",
 			release: ReleaseRef,
+			rule:    ReleaseRule,
+		},
+		"Release - v0.2 - Submodule": {
+			repo:    submoduleRepo,
+			version: semver.MustParse("0.2.0"),
+			want:    "ref",
+			release: NoRef,
 			rule:    ReleaseRule,
 		},
 		"Release - v0.3": {
@@ -231,12 +255,8 @@ func TestRepo_BestRefFor(t *testing.T) {
 				tt.moduleVersion = tt.version
 			}
 			got, release := tt.repo.BestRefFor(tt.version, tt.moduleVersion, tt.rule)
-			if got != tt.want {
-				t.Errorf("repo.BestRefFor() got ref = %v, want %v", got, tt.want)
-			}
-			if release != tt.release {
-				t.Errorf("repo.BestRefFor() got isRelease = %v, want %v", got, tt.want)
-			}
+			assert.Equal(t, tt.want, got)
+			assert.Equal(t, tt.release, release)
 		})
 	}
 }
