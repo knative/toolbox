@@ -71,10 +71,21 @@ func metaContent(doc *html.Node, name string) (string, error) {
 	return "", fmt.Errorf("missing <meta name=%s> in the node tree", name)
 }
 
+// Importer imports the metadata for given URL of a Go module.
+type Importer struct {
+	*http.Client
+}
+
+var defaultImporter = Importer{}
+
 // GetMetaImport fetches and parses header tags named go-import into a
 // MetaImport object.
-func GetMetaImport(url string) (*MetaImport, error) {
-	resp, err := http.Get(url)
+func (i Importer) GetMetaImport(url string) (*MetaImport, error) {
+	cl := i.Client
+	if cl == nil {
+		cl = http.DefaultClient
+	}
+	resp, err := cl.Get(url)
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +109,8 @@ func GetMetaImport(url string) (*MetaImport, error) {
 }
 
 // ModuleToRepo resolves a go module name to a remote git repo.
-func ModuleToRepo(module string) (*git.Repo, error) {
+func (i Importer) ModuleToRepo(module string) (*git.Repo, error) {
+	originalModule := module
 	// If module has more than 1 domain + 2 paths (e.g. github.com/blang/semver/v4),
 	// make it 1 domain + 2 paths. Otherwise, it fails to fetch go import on GetMetaImport().
 	m := strings.Split(module, "/")
@@ -107,7 +119,7 @@ func ModuleToRepo(module string) (*git.Repo, error) {
 	}
 
 	url := fmt.Sprintf("https://%s?go-get=1", module)
-	meta, err := GetMetaImport(url)
+	meta, err := i.GetMetaImport(url)
 	if err != nil {
 		return nil, fmt.Errorf("unable to fetch go import %s: %w", url, err)
 	}
@@ -116,5 +128,24 @@ func ModuleToRepo(module string) (*git.Repo, error) {
 		return nil, errors.New("unknown VCS: " + meta.VCS)
 	}
 
-	return git.GetRepo(module, meta.RepoRoot)
+	repo, err := git.GetRepo(module, meta.RepoRoot)
+	if err != nil {
+		return nil, err
+	}
+	if meta.Prefix != originalModule {
+		repo.Submodule = strings.TrimPrefix(
+			strings.TrimPrefix(originalModule, meta.Prefix), "/")
+	}
+	return repo, nil
+}
+
+// GetMetaImport fetches and parses header tags named go-import into a
+// MetaImport object.
+func GetMetaImport(url string) (*MetaImport, error) {
+	return defaultImporter.GetMetaImport(url)
+}
+
+// ModuleToRepo resolves a go module name to a remote git repo.
+func ModuleToRepo(module string) (*git.Repo, error) {
+	return defaultImporter.ModuleToRepo(module)
 }

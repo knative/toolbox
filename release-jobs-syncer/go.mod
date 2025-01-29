@@ -1,6 +1,6 @@
 module knative.dev/toolbox/release-jobs-syncer
 
-go 1.21
+go 1.22.7
 
 replace knative.dev/toolbox => ../
 

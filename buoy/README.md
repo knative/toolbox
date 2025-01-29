@@ -121,7 +121,7 @@ knative.dev/eventing-github not ready for release because of the following depen
 If you need to see a more verbose output, use `--verbose`:
 
 ```
-$ bouy check $HOME/go/src/knative.dev/eventing-github/go.mod --domain knative.dev --release 0.18 --verbose
+$ buoy check $HOME/go/src/knative.dev/eventing-github/go.mod --domain knative.dev --release 0.18 --verbose
 knative.dev/eventing-github
 ✔ knative.dev/eventing@v0.18.0
 ✔ knative.dev/pkg@release-0.18
@@ -129,7 +129,7 @@ knative.dev/eventing-github
 ✔ knative.dev/test-infra@release-0.18
 [exit status 0]
 
-$ bouy check $HOME/go/src/knative.dev/eventing-github/go.mod --domain knative.dev  --release 0.19 --verbose
+$ buoy check $HOME/go/src/knative.dev/eventing-github/go.mod --domain knative.dev  --release 0.19 --verbose
 knative.dev/eventing-github
 ✘ knative.dev/eventing@master
 ✘ knative.dev/pkg@master
@@ -160,6 +160,12 @@ Rulesets,
   ReleaseOrBranch  tagged releases, release branch
 
 For rulesets that that restrict the selection process, no ref is selected.
+
+NOTE: For Go modules that don't live on the root of their repository, the tagged
+releases are skipped. Golang requires the tags for sub-modules to be in form of
+"sub/v1.99.0" to be recognized by "go get" command. It's cumbersome to have
+both "v1.99.0" and "sub/v1.99.0", so float will skip looking for tags in this
+case.
 
 Usage:
   buoy float go.mod [flags]

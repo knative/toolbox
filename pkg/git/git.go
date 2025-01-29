@@ -27,18 +27,21 @@ import (
 )
 
 // Repo is a simplified git remote, containing only the list of tags, default
-// branch and branches.
+// branch, branches, URL and submodule information.
 type Repo struct {
 	Ref           string
 	DefaultBranch string
 	Tags          []string
 	Branches      []string
+	Submodule     string
+	URL           string
 }
 
 // GetRepo will fetch a git repo and process it into a Repo object.
 func GetRepo(ref, url string) (*Repo, error) {
 	repo := new(Repo)
 	repo.Ref = ref
+	repo.URL = url
 
 	rem := git.NewRemote(memory.NewStorage(), &config.RemoteConfig{
 		Name: "origin",
@@ -91,28 +94,17 @@ func (rt RefType) String() string {
 }
 
 // BestRefFor Returns module@ref, isRelease based on the provided ruleset for
-// a this release.
+// this release.
 func (r *Repo) BestRefFor(release, moduleRelease semver.Version, ruleset RulesetType) (string, RefType) {
-	switch ruleset {
-	case AnyRule, ReleaseOrReleaseBranchRule, ReleaseRule:
-		var largest *semver.Version
-		// Look for a release.
-		for _, t := range r.Tags {
-			if sv, ok := normalizeTagVersion(t); ok {
-				v, _ := semver.Make(sv)
-				// Go does not understand how to fetch semver tags with pre or build tags, skip those.
-				if v.Pre != nil || v.Build != nil {
-					continue
-				}
-				if v.Major == moduleRelease.Major && v.Minor == moduleRelease.Minor {
-					if largest == nil || largest.LT(v) {
-						largest = &v
-					}
-				}
+	// don't look for tags if given module lives within repo as non-root member
+	if r.Submodule == "" {
+		switch ruleset {
+		case AnyRule, ReleaseOrReleaseBranchRule, ReleaseRule:
+			largest := r.lookForRelease(moduleRelease)
+			if largest != nil {
+				return fmt.Sprintf("%s@%s", r.Ref, ReleaseVersion(*largest)), ReleaseRef
 			}
-		}
-		if largest != nil {
-			return fmt.Sprintf("%s@%s", r.Ref, ReleaseVersion(*largest)), ReleaseRef
+		default:
 		}
 	}
 
@@ -134,16 +126,37 @@ func (r *Repo) BestRefFor(release, moduleRelease semver.Version, ruleset Ruleset
 		if largest != nil {
 			return fmt.Sprintf("%s@%s", r.Ref, ReleaseBranchVersion(*largest)), ReleaseBranchRef
 		}
+	default:
 	}
 
 	switch ruleset {
 	case AnyRule:
 		// Look for a Return default branch.
 		return fmt.Sprintf("%s@%s", r.Ref, r.DefaultBranch), DefaultBranchRef
+	default:
 	}
 
 	// No ref found with the provided rule
 	return r.Ref, NoRef
+}
+
+func (r *Repo) lookForRelease(moduleRelease semver.Version) *semver.Version {
+	var largest *semver.Version
+	for _, t := range r.Tags {
+		if sv, ok := normalizeTagVersion(t); ok {
+			v, _ := semver.Make(sv)
+			// Go does not understand how to fetch semver tags with pre or build tags, skip those.
+			if v.Pre != nil || v.Build != nil {
+				continue
+			}
+			if v.Major == moduleRelease.Major && v.Minor == moduleRelease.Minor {
+				if largest == nil || largest.LT(v) {
+					largest = &v
+				}
+			}
+		}
+	}
+	return largest
 }
 
 func normalizeTagVersion(v string) (string, bool) {

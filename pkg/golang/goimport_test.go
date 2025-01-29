@@ -17,12 +17,19 @@ limitations under the License.
 package golang
 
 import (
+	"bytes"
+	"io"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"strings"
 	"testing"
+	"text/template"
 
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"golang.org/x/net/html"
+	"knative.dev/pkg/network"
 )
 
 func TestMetaImport_OrgRepo(t *testing.T) {
@@ -189,5 +196,93 @@ func TestGetMetaImport_MissingGoImport(t *testing.T) {
 	_, err := GetMetaImport(ts.URL)
 	if err == nil {
 		t.Errorf("expected error, but did not get it.")
+	}
+}
+
+func TestModuleToRepo(t *testing.T) {
+	t.Parallel()
+	tcs := []testModuleToRepoCase{{
+		name:   "knative pkg",
+		module: "knative.dev/pkg",
+		repo:   "https://github.com/knative/pkg",
+	}, {
+		name:   "knative client",
+		module: "knative.dev/client",
+		repo:   "https://github.com/knative/client",
+	}, {
+		name:   "knative client pkg",
+		module: "knative.dev/client/pkg",
+		repo:   "https://github.com/knative/client",
+		sub:    "pkg",
+	}}
+	cl := mockClient(tcs)
+	defer cl.CloseIdleConnections()
+
+	for _, tc := range tcs {
+		t.Run(tc.name, tc.test(cl))
+	}
+}
+
+func mockClient(tcs []testModuleToRepoCase) *http.Client {
+	tpl := template.Must(template.New("goimport").Parse(`<html>
+		<head>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+			<meta name="go-import" content="{{ .name }} git {{ .repo }}">
+			<meta name="go-source" content="{{ .name }} {{ .repo }} {{ .repo }}/tree/master{/dir} {{ .repo }}/blob/master{/dir}/{file}#L{line}">
+			<meta http-equiv="refresh" content="0; url=https://pkg.go.dev/{{ .name }}/">
+		</head>
+		</html>`))
+	return &http.Client{Transport: network.RoundTripperFunc(func(request *http.Request) (*http.Response, error) {
+		for _, tc := range tcs {
+			u, uerr := url.Parse("https://" + tc.module)
+			if uerr != nil {
+				return errResponse(uerr)
+			}
+			if u.Host != request.URL.Host || u.Path != request.URL.Path {
+				continue
+			}
+			buf := bytes.NewBufferString("")
+			rootName := strings.TrimSuffix(strings.TrimSuffix(tc.module, tc.sub), "/")
+			if err := tpl.Execute(buf, map[string]string{
+				"name": rootName,
+				"repo": tc.repo,
+			}); err != nil {
+				return errResponse(err)
+			}
+
+			return &http.Response{
+				StatusCode: http.StatusOK,
+				Body:       io.NopCloser(strings.NewReader(buf.String())),
+			}, nil
+		}
+		return &http.Response{
+			StatusCode: http.StatusNotFound,
+		}, nil
+	})}
+}
+
+func errResponse(err error) (*http.Response, error) {
+	return &http.Response{
+		StatusCode: http.StatusInternalServerError,
+		Body:       io.NopCloser(strings.NewReader(err.Error())),
+	}, nil
+}
+
+type testModuleToRepoCase struct {
+	name   string
+	module string
+	repo   string
+	sub    string
+}
+
+func (c testModuleToRepoCase) test(cl *http.Client) func(t *testing.T) {
+	return func(t *testing.T) {
+		t.Parallel()
+		i := Importer{cl}
+		repo, err := i.ModuleToRepo(c.module)
+		require.NoError(t, err)
+		assert.Equal(t, c.module, repo.Ref)
+		assert.Equal(t, c.repo, repo.URL)
+		assert.Equal(t, c.sub, repo.Submodule)
 	}
 }
