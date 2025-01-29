@@ -57,6 +57,12 @@ Rulesets,
   ReleaseOrBranch  tagged releases, release branch
 
 For rulesets that that restrict the selection process, no ref is selected.
+
+NOTE: For Go modules that don't live on the root of their repository, the tagged
+releases are skipped. Golang requires the tags for sub-modules to be in form of
+"sub/v1.99.0" to be recognized by "go get" command. It's cumbersome to have
+both "v1.99.0" and "sub/v1.99.0", so float will skip looking for tags in this
+case.
 `,
 		Args: cobra.ExactArgs(1),
 		PreRunE: func(cmd *cobra.Command, args []string) error {
