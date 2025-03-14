@@ -56,7 +56,7 @@ func topFunction(c gcs.Client) error {
 	return nil
 }
 
-func ExampleSetError() {
+func Example_setError() {
 	mockClient := NewClientMocker()
 
 	// Call to ReadObject, first call should return error, but returns nil
