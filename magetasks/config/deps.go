@@ -57,7 +57,8 @@ func (d dependencies) Install(_ context.Context, t *tasks.Task, dest string) err
 	for _, dep := range d.installs() {
 		pp := t.Part(fmt.Sprintf("Go install %q", dep)).Starting()
 		env := map[string]string{
-			"GOBIN": dest,
+			"GOBIN":       dest,
+			"GOTOOLCHAIN": "auto",
 		}
 		if err := sh.RunWith(env, "go", "install", dep); err != nil {
 			pp.Done(err)
