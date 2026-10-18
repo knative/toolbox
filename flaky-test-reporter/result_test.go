@@ -9,9 +9,6 @@ import (
 )
 
 func Test_includeFinishedBuild(t *testing.T) {
-	startTime := int64(1)
-	finishTime := int64(2)
-
 	tests := []struct {
 		name  string
 		build prow.Build
@@ -26,7 +23,7 @@ func Test_includeFinishedBuild(t *testing.T) {
 			name: "finished build without start time",
 			build: prow.Build{
 				StoragePath: "logs/job/123",
-				FinishTime:  &finishTime,
+				FinishTime:  new(int64(2)),
 			},
 			want: false,
 		},
@@ -34,8 +31,8 @@ func Test_includeFinishedBuild(t *testing.T) {
 			name: "finished build with start time",
 			build: prow.Build{
 				StoragePath: "logs/job/124",
-				StartTime:   &startTime,
-				FinishTime:  &finishTime,
+				StartTime:   new(int64(1)),
+				FinishTime:  new(int64(2)),
 			},
 			want: true,
 		},
