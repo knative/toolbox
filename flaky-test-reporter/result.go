@@ -267,6 +267,21 @@ func intSliceContains(its []int, target int) bool {
 	return false
 }
 
+// includeFinishedBuild returns true when the build contains enough metadata for
+// flaky-test-reporter to use it. Some Prow failure modes can produce a
+// finished.json without a started.json (for example, pod scheduling timeout),
+// so those builds should be skipped instead of crashing the reporter.
+func includeFinishedBuild(build *prow.Build) bool {
+	if build.FinishTime == nil {
+		return false
+	}
+	if build.StartTime == nil {
+		log.Printf("Skipping finished build without start time: '%s'", build.StoragePath)
+		return false
+	}
+	return true
+}
+
 // getLatestFinishedBuilds is an inexpensive way of listing latest finished builds, in comparing to
 // the GetLatestBuilds function from prow package, as it doesn't precompute start/finish time before sorting.
 // This function takes the assumption that build IDs are always incremental integers, it would fail if it doesn't
@@ -279,10 +294,7 @@ func getLatestFinishedBuilds(job *prow.Job, count int) []prow.Build {
 			break
 		}
 		build := job.NewBuild(buildID)
-		if build.FinishTime != nil {
-			if build.StartTime == nil {
-				log.Fatalf("Failed parsing start time for finished build '%s'", build.StoragePath)
-			}
+		if includeFinishedBuild(build) {
 			builds = append(builds, *build)
 		}
 	}

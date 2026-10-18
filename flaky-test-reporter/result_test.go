@@ -5,7 +5,47 @@ import (
 	"testing"
 
 	"knative.dev/toolbox/pkg/junit"
+	"knative.dev/toolbox/pkg/prow"
 )
+
+func Test_includeFinishedBuild(t *testing.T) {
+	tests := []struct {
+		name  string
+		build prow.Build
+		want  bool
+	}{
+		{
+			name:  "unfinished build",
+			build: prow.Build{},
+			want:  false,
+		},
+		{
+			name: "finished build without start time",
+			build: prow.Build{
+				StoragePath: "logs/job/123",
+				FinishTime:  new(int64(2)),
+			},
+			want: false,
+		},
+		{
+			name: "finished build with start time",
+			build: prow.Build{
+				StoragePath: "logs/job/124",
+				StartTime:   new(int64(1)),
+				FinishTime:  new(int64(2)),
+			},
+			want: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := includeFinishedBuild(&tt.build); got != tt.want {
+				t.Fatalf("includeFinishedBuild() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
 
 func Test_filterOutParentTests(t *testing.T) {
 	tests := []struct {
