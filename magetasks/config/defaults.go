@@ -33,7 +33,7 @@ func FillInDefaultValues(cfg Config) Config {
 		cfg.BuildDirPath = []string{"build", "_output"}
 	}
 	if cfg.Dependencies.Golang == nil {
-		cfg.Dependencies.Golang = NewDependencies("gotest.tools/gotestsum@latest")
+		cfg.Dependencies.Golang = NewDependencies("gotest.tools/gotestsum@v1.13.0")
 	}
 	if cfg.Dependencies.Binaries == nil {
 		cfg.Dependencies.Binaries = NewBinaries()
